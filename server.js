@@ -17,6 +17,13 @@ const purchases = require('./routes/purchases');
 
 const app = express();
 
+require('dotenv').config()
+
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize('famous-amos', 'jchiu', process.env.SQLPASS, {
+    dialect: 'postgres'
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -43,6 +50,15 @@ app.use((req, res, next) => {
   err.status = 404;
   next(err);
 });
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 // error handler
 app.use((err, req, res, next) => {
