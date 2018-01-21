@@ -37,6 +37,7 @@ router.get('/:index/edit', (req, res) => {
 
 // UPDATE
 router.put('/:index', (req, res) => {
+  //pet model
   res.redirect(`/pets/${req.params.index}`)
 });
 
