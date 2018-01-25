@@ -7,7 +7,7 @@ let comments = require('../json/comments')
 router.post('/', (req, res) => {
     comments.unshift(req.body);
 
-    res.redirect('/pets/0');
+    res.redirect(`/pets/${req.params.petId}`);
 });
 
 // DESTROY
