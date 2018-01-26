@@ -10,11 +10,11 @@ router.get('/pets/:petId/purchase', (req, res) => {
   res.render('purchase-new', { pet: pets[req.params.petId]});
 });
 
-// CREATE
-// router.post('/', (req, res) => {
-//     // Create transaction and send to stripe
-//
-//     res.redirect('/');
-// });
+// CREATe
+ router.post('/', (req, res) => {
+   // Create transaction and send to stripe
+
+/    res.redirect('/');
+ });
 
 module.exports = router;
