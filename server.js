@@ -14,13 +14,15 @@ const index = require('./routes/index');
 const pets = require('./routes/pets');
 const comments = require('./routes/comments');
 const purchases = require('./routes/purchases');
-
+const Sequelize = require('sequelize');
 const app = express();
 
+//MIDDLEWARE
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+const sequelize = new Sequelize("famous-amos-development", "donovanadams", null, { 'dialect': 'postgres' });
 // override with POST having ?_method=DELETE or ?_method=PUT
 app.use(methodOverride('_method'))
 
@@ -54,5 +56,12 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.render('error');
 });
-
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 module.exports = app;
