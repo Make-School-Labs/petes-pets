@@ -10,9 +10,7 @@ router.post('/', (req, res) => {
     res.redirect(`/pets/${req.params.petId}`);
 });
 
-// DESTROY
 router.delete('/:index', (req, res) => {
-    console.log(req.params.index);
     model.Comment.destroy({
         where: {
             id: req.params.index
