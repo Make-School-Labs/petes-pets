@@ -19,6 +19,22 @@ router.delete('/:index', (req, res) => {
     res.redirect(`/pets/${req.params.petId}`);
 });
 
+router.get('/comment-populate', (req, res) => {
+    const Pet = model.Pet;
+    const Comment = model.Comment;
 
+    Comment.sync().then(function(){
+        // Just add ALL of the comments, man.
+        commentJSON.forEach(function(content){
+            content.PetId = req.params.petId;
+            comment.create(content);
+        });
+    }).then(() => {
+        res.send("Population successful.");
+    }).catch((err) => {
+        res.send(err);
+    });
+
+});
 
 module.exports = router;

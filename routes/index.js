@@ -6,7 +6,7 @@ const model = require('../db/models/');
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  models.Pet.findAll().then(pets => {
+  model.Pet.findAll().then(pets => {
     res.render('pets-index', { pets: pets });
   })
 });
