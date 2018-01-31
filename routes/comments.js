@@ -7,12 +7,12 @@ let comments = require('../json/comments')
 router.post('/', (req, res) => {
     req.body.petId = req.params.petId;
     model.Comment.create(
-            req.body
-            //PetId: req.body.petId
+            req.body,
+            req.body.petId, req.params.petId
     );
     res.redirect(`/pets/${req.params.petId}`);
 });
-
+// Destroy 
 router.delete('/:id', (req, res) => {
     model.Comment.destroy({
         where: {
