@@ -11,4 +11,19 @@ router.get('/', (req, res) => {
   })
 });
 
+/* Search page. */
+
+router.get('/search', (req, res) => {
+    console.log("Hello!", req.query.name)
+    model.Pet.findAll(
+        {
+            where: {
+                name: req.query.name
+            }
+        }
+    ).then(pets => {
+      res.render('pets-index', { pets: pets });
+    });
+
+});
 module.exports = router;
