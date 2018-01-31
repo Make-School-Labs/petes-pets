@@ -37,7 +37,7 @@ router.post('/', (req, res) => {
 // EDIT
 router.get('/:index/edit', (req, res) => {
     Pet.findById(req.params.index).then(pet => {
-        res.render('pets-edit', { pet });
+        res.render('pets-edit', { pet:pet });
     });
 });
 
