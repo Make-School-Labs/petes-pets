@@ -6,9 +6,10 @@ let comments = require('../json/comments')
 // CREATE
 router.post('/', (req, res) => {
     req.body.petId = req.params.petId;
-
-    model.Comment.create(req.body);
-
+    model.Comment.create(
+            req.body
+            //PetId: req.body.petId
+    );
     res.redirect(`/pets/${req.params.petId}`);
 });
 
