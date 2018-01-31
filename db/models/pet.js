@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Pet.associate = function(models){
       Pet.hasMany(models.Comment);
-      sequelize.sync
+      sequelize.sync  //synch the database
   };
   return Pet;
 };
