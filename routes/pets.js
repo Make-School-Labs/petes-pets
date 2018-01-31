@@ -6,20 +6,14 @@ let comments = require('../json/comments')
 const model = require('../db/models/');
 const Pet =require('../db/models').Pet
 
-
-// INDEX
-router.get('/', (req, res) => {
-  res.send(pets);
-});
-
 // NEW
 router.get('/new', (req, res) => {
   res.render('pets-new');
 });
 
 // SHOW
-router.get('/:index', (req, res) => {
-  Pet.findById(req.params.index, {
+router.get('/:id', (req, res) => {
+  model.Pet.findById(req.params.id, {
       include: {
           model: model.Comment
       }
