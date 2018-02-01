@@ -4,6 +4,7 @@ const model = require('../db/models/');
 let comments = require('../json/comments')
 
 // CREATE
+// flash Source code based on the tutorial from Web3
 router.post('/', (req, res) => {
     req.body.petId = req.params.petId;
     model.Comment.create({
@@ -17,7 +18,9 @@ router.post('/', (req, res) => {
     res.redirect(`/pets/${req.params.petId}`);
   });
 });
-// Destroy
+// DESTROY
+// FLASH Source code based on the tutorial from Web3
+
 router.delete('/:id', (req, res) => {
     model.Comment.destroy({
         where: {

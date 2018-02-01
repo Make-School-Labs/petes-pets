@@ -12,7 +12,9 @@ router.get('/', (req, res) => {
 });
 
 /*  Pagination. */
-
+//Use the code from Web 3
+// https://github.com/Product-College-Courses/WEB-3-Advanced
+//-Web-Patterns/tree/master/05.%20Simple%20Search%20%26%20Pagination
 router.get('/:page:page', (req, res) => {
   let limit = 3;   // number of records per page
   let offset = 0;

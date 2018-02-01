@@ -4,7 +4,7 @@ const router = express.Router();
 let pets = require('../json/pets')
 let comments = require('../json/comments')
 const model = require('../db/models/');
-const Pet =require('../db/models').Pet
+const Pet =require('../db/models').Pet  //set up model for Pet
 
 // INDEX
 router.get('/', (req, res) => {
