@@ -29,6 +29,7 @@ router.get('/:page:page', (req, res) => {
       offset: offset,
       $sort: { id: 1 }
     }).then((users) => {
+      // res.status(200).json({'result': users, 'count': data.count, 'pages': pages});
       res.render('pets-index', { pets, count: data.count, pages});
     });
   })
