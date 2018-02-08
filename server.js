@@ -14,8 +14,23 @@ const index = require('./routes/index');
 const pets = require('./routes/pets');
 const comments = require('./routes/comments');
 const purchases = require('./routes/purchases');
+// added Flash
+const flash = require('express-flash');
+const session = require('express-session');
 
 const app = express();
+
+//flash
+app.use(cookieParser('keyboard cat'));
+app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(flash());
+
+require('dotenv').config()
+
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize('famous-amos', 'jchiu', process.env.SQLPASS, {
+    dialect: 'postgres'
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,11 +53,29 @@ app.use('/pets/:petId/comments', comments);
 app.use(purchases);
 
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
+app.use(function(req, res, next) {
   const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
+
+
+app.use(function(err, req, res, next) {
+  if(err.status == 404) {
+    res.redirect('/404.html');
+  } else if (err.status == 500) {
+    res.redirect('/500.html');
+  }
+});
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 // error handler
 app.use((err, req, res, next) => {
