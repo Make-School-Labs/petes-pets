@@ -26,7 +26,7 @@ router.get('/:index', (req, res) => {
   }).then(pet => {
       res.render('pets-show', { pet:pet });
   });
-});
+
 
 // CREATE
 router.post('/', (req, res) => {
