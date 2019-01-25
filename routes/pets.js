@@ -1,59 +1,62 @@
 // MODELS
+const petsRouter = require('express').Router();
 const Pet = require('../models/pet');
 
 // PET ROUTES
-module.exports = (app) => {
 
   // INDEX PET => index.js
 
   // NEW PET
-  app.get('/pets/new', (req, res) => {
-    res.render('pets-new');
-  });
+petsRouter.get('/pets/new', (req, res) => {
+  res.render('pets-new');
+});
 
-  // CREATE PET
-  app.post('/pets', (req, res) => {
-    var pet = new Pet(req.body);
-
-    pet.save()
-      .then((pet) => {
-        res.send({ pet: pet });
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(400).send(err);
-      }) ;
-  });
-
-  // SHOW PET
-  app.get('/pets/:id', (req, res) => {
-    Pet.findById(req.params.id).exec((err, pet) => {
-      res.render('pets-show', { pet: pet });
-    });
-  });
+// CREATE PET
+petsRouter.post('/pets', (req, res) => {
+  var pet = new Pet(req.body);
+  pet.save()
+    .then((pet) => {
+      res.send({ pet: pet });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(400).send(err);
+    }) ;
+});
 
   // EDIT PET
-  app.get('/pets/:id/edit', (req, res) => {
-    Pet.findById(req.params.id).exec((err, pet) => {
-      res.render('pets-edit', { pet: pet });
+petsRouter.get('/pets/:id/edit', (req, res) => {
+  Pet.findById(req.params.id).exec((err, pet) => {
+    res.render('pets-edit', { pet: pet });
+  });
+});
+
+petsRouter.route('/pets/:id')
+  // SHOW PET
+.get((req, res) => {
+  Pet.findById(req.params.id).exec((err, pet) => {
+    res.render('pets-show', {
+      pet: pet
     });
   });
-
-  // UPDATE PET
-  app.put('/pets/:id', (req, res) => {
-    Pet.findByIdAndUpdate(req.params.id, req.body)
-      .then((pet) => {
-        res.redirect(`/pets/${pet._id}`)
-      })
-      .catch((err) => {
-        // Handle Errors
-      });
-  });
-
-  // DELETE PET
-  app.delete('/pets/:id', (req, res) => {
-    Pet.findByIdAndRemove(req.params.id).exec((err, pet) => {
-      return res.redirect('/')
+})
+// UPDATE PET
+.put((req, res) => {
+  Pet.findByIdAndUpdate(req.params.id, req.body)
+    .then((pet) => {
+      res.redirect(`/pets/${pet._id}`)
+    })
+    .catch((err) => {
+      // Handle Errors
     });
+})
+
+// DELETE PET
+.delete((req, res) => {
+  Pet.findByIdAndRemove(req.params.id).exec((err, pet) => {
+    return res.redirect('/')
   });
-}
+});
+
+
+  module.exports = petsRouter

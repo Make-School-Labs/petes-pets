@@ -38,9 +38,12 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Routes
+const pets = require('./routes/pets');
+const index = require('./routes/index');
+app.use(pets);
+app.use(index);
 
-require('./routes/index.js')(app);
-require('./routes/pets.js')(app);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
