@@ -16,18 +16,15 @@ petsRouter.post('/pets', (req, res) => {
   var pet = new Pet(req.body);
   pet.save()
     .then((pet) => {
-      res.send({ pet: pet });
+      res.send({ pet });
     })
-    .catch((err) => {
-      console.log(err);
-      res.status(400).send(err);
-    }) ;
+    .catch((err) => { res.send(err) });
 });
 
   // EDIT PET
 petsRouter.get('/pets/:id/edit', (req, res) => {
   Pet.findById(req.params.id).exec((err, pet) => {
-    res.render('pets-edit', { pet: pet });
+    res.render('pets-edit', { pet });
   });
 });
 
@@ -46,9 +43,7 @@ petsRouter.route('/pets/:id')
     .then((pet) => {
       res.redirect(`/pets/${pet._id}`)
     })
-    .catch((err) => {
-      // Handle Errors
-    });
+    .catch((err) => {res.send(err)});
 })
 
 // DELETE PET
@@ -56,6 +51,19 @@ petsRouter.route('/pets/:id')
   Pet.findByIdAndRemove(req.params.id).exec((err, pet) => {
     return res.redirect('/')
   });
+});
+
+// SEARCH PET
+petsRouter.get('/search', (req, res) => {
+  term = new RegExp(req.query.term, 'i');
+  Pet.find({ $or: [
+    {'name': term},
+      {'species': term}
+    ]})
+    .then((pets) => {
+      res.render('pets-index', { pets });
+    })
+    .catch((err) => { res.send(err) });
 });
 
 
