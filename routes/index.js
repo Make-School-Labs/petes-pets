@@ -3,9 +3,11 @@ const Pet = require('../models/pet');
 
 /* GET home page. */
 indexRoute.get('/', (req, res) => {
-  Pet.find().exec((err, pets) => {
-    res.render('pets-index', { pets: pets });    
-  });
+  Pet.find()
+  .then((pets) => {
+    res.render('pets-index', { pets });
+  })
+  .catch((err) => { res.send(err) });
 });
 
 
