@@ -61,12 +61,12 @@ petsRouter.get('/search', (req, res) => {
   term = new RegExp(req.query.term, 'i');
   Pet.find({ $or: [
     {'name': term},
-      {'species': term}
-    ]})
-    .then((pets) => {
-      res.render('pets-index', { pets });
-    })
-    .catch((err) => { res.send(err) });
+    {'species': term}
+  ]})
+  .then((pets) => {
+    res.render('pets-index', { pets });
+  })
+  .catch((err) => { res.send(err) });
 });
 
 
