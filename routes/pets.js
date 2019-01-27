@@ -58,15 +58,24 @@ petsRouter.route('/pets/:id')
 
 // SEARCH PET
 petsRouter.get('/search', (req, res) => {
-  term = new RegExp(req.query.term, 'i');
-  Pet.find({ $or: [
-    {'name': term},
-    {'species': term}
-  ]})
-  .then((pets) => {
-    res.render('pets-index', { pets });
+  const page = req.query.page || 1;
+  const term = new RegExp(req.query.term, 'i');
+
+  Pet.paginate({ 
+    $or: [
+      {'name': term},
+      {'species': term}
+    ]
   })
-  .catch((err) => { res.send(err) });
+  .then((results) => {
+    res.render('pets-index', { 
+      pets: results.docs,
+      pagesCount: results.pages,
+      currentPage: page,
+      term: req.query.term
+    });
+  })
+  .catch((err) => { res.json(err) });
 });
 
 
