@@ -9,6 +9,13 @@ Add a search bar in the navbar to search pets. Paginate the results.
 
 ### Validations
 Add validations to protect against unsanitary data getting into your db.
+Validations can happen at four places:
+1. In the client
+2. In the server in the model
+3. In the server in the controller (parameter sanitization)
+4. In the database
+Most validations happen at the client and model levels.
+
 
 ### Upload Images
 Upload pictures of pets from new and edit forms

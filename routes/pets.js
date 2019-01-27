@@ -18,7 +18,7 @@ petsRouter.post('/pets', (req, res) => {
     .then((pet) => {
       res.send({ pet });
     })
-    .catch((err) => { res.send(err) });
+    .catch((err) => { res.status(400).send(err.errors) });
 });
 
 // EDIT PET
